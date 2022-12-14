@@ -11,10 +11,10 @@ vk_session = vk_api.VkApi(token=MAIN_TOKEN)
 sessionApi = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
 
-
+f = open('keyboard.json', 'r')
+test = f.read()
 def sender(id, text):
-    vk_session.method('messages.send', {'user_id': id, 'message': text, 'random_id': 0})
-
+    vk_session.method('messages.send', {'user_id': id, 'message': text, 'keyboard': test,'random_id': 0})
 
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW:
