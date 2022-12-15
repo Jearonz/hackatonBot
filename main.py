@@ -54,3 +54,5 @@ for event in longpoll.listen():
             if msg == 'направления подготовки и специальности':
                 update_keyboard()
                 sender(id, 'info', get_keyboard('keyboard_courses.json'))
+            if msg == 'прочее':
+                sender(id, 'info', get_keyboard('keyboard_info.json'))
