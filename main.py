@@ -147,3 +147,4 @@ for event in longpoll.listen():
                 sender(id, read_file('txt_files/education_center.txt'), get_keyboard('keyboards/keyboard_additional_education.json'))
             if msg == 'центр транспортной безопасности':
                 sender(id, read_file('txt_files/transport_secure_centre.txt'), get_keyboard('keyboards/keyboard_additional_education.json'))
+
