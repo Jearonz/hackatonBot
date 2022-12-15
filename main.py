@@ -11,9 +11,9 @@ OWNER_TOKEN = 'vk1.a.XVjgiLNTQtrLs00Raha2V1vWIT4GTGA5nt-EHME3aejya4rpDyL8iA3zYH-
 textOfPost = ''
 OWNER_ID = -217764821
 POST = False
-SEND_NEW_POST = False
 ID_POST = None
-
+NEW_REQUEST = False
+ADMINS_ACTIVE = []
 # Press the green button in the gutter to run the script.
 
 vk_session = vk_api.VkApi(token=MAIN_TOKEN)
@@ -29,6 +29,9 @@ def get_keyboard(file):
     f.close()
     return keyboard
 
+def sendNewRequest(msg):
+    for adminId in adminsArray:
+        sender(adminId, msg)
 
 def update_keyboard():
     f = open('admissions_information/AIT.txt', 'r')
@@ -136,23 +139,32 @@ def sendNewPost():
     for userId in usersArray:
         sendPost(int(userId), 'wall' + str(OWNER_ID) +'_' + str(ID_POST['post_id']))
 
+def sendNewRequest(msg):
+    for adminId in adminsArray:
+        sender(adminId, msg, get_keyboard('keyboards/keyboard_admin.json'))
+
 for event in longpoll.listen():
-    # print(event.attachments)
     if event.type == VkEventType.MESSAGE_NEW:
         if event.to_me:
             if POST == True and event.text.lower() != 'отмена':
                 textOfPost = event.text
-                # if event.attachments: attachments = event.attachments['attach1_type'] + event.attachments['attach1']
                 ID_POST = creatPost(OWNER_ID, textOfPost)
                 print(ID_POST)
                 POST = False
-                sender(event.user_id, 'Я сделал пост', get_keyboard('keyboards/keyboard_admin_post.json'))
+                sender(event.user_id, 'Я сделал пост', get_keyboard('keyboards/keyboard_admin.json'))
                 sendNewPost()
             elif POST == True:
                 sender(event.user_id, 'Отмена постинга', get_keyboard('keyboards/keyboard_admin.json'))
                 POST = False
+
+            if NEW_REQUEST == True and event.text.lower() != 'отмена':
+                sendNewRequest('Пользователь оставил заявку: "' + event.text + '"  \nCсылка на пользователя: https://vk.com/' + str(event.user_id))
+                NEW_REQUEST = False
+
             msg = event.text.lower()
             id = event.user_id
+            if msg == 'админ':
+                sender(id, 'Главное меню админа', get_keyboard('keyboards/keyboard_admin.json'))
             if msg == 'начать':
                 sender(id, 'Главное меню:', get_keyboard('keyboards/keyboard_main.json'))
             if msg == 'информация о приемной комиссии':
@@ -212,12 +224,24 @@ for event in longpoll.listen():
                     if userId != usersArray[-1] and userId != '':
                         f.write(',')
                 f.close()
-                print(usersArray)
 
-            if msg == 'пост':
-                print(adminsArray)
-                if str(id) in adminsArray:
-                    sender(id, 'Введите текст поста или "отмена" для отмены', get_keyboard('keyboards/keyboard_admin_post.json'))
+            if msg == 'Сделать пост':
+                if str(id) in ADMINS_ACTIVE:
+                    sender(id, 'Введите текст поста, для отмены введите "отмена"', get_keyboard('keyboards/keyboard_admin_post.json'))
                     POST = True
+                elif str(id) in adminsArray:
+                    sender(id, 'Вы не вошли в панель администратора', get_keyboard('keyboards/keyboard_admin.json'))
                 else:
                     sender(id, 'Вы не админ', get_keyboard('keyboards/keyboard_main.json'))
+
+            if msg == 'оставить заявку':
+                sender(id, 'Введите текст заявки, для отмены введите "отмена"',get_keyboard('keyboards/keyboard_main.json'))
+                NEW_REQUEST = True
+
+            if msg == 'админ' and str(id) in adminsArray:
+                sender(id, 'Вы вошли в панель админа',get_keyboard('keyboards/keyboard_admin.json'))
+                ADMINS_ACTIVE.append(str(id))
+
+            if msg == 'выход' and str(id) in ADMINS_ACTIVE:
+                sender(id, 'Вы вышли из панели администратора', get_keyboard('keyboards/keyboard_main.json'))
+                ADMINS_ACTIVE.remove(str(id))
