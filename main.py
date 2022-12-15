@@ -17,6 +17,7 @@ def get_keyboard(file):
     f.close()
     return keyboard
 
+
 def update_keyboard():
     f = open('AIT.txt', 'r')
     while True:
@@ -27,11 +28,12 @@ def update_keyboard():
         new_data = [{"action": {"type": "text", "payload": "{\"button\": \"1\"}", "label": a[1]}, "color": "secondary"}]
         with open('keyboard_courses.json', encoding='utf8') as f1:
             data = json.load(f1)
-            data["buttons"].insert(0, new_data)
-            with open('keyboard_courses.json', 'w', encoding='utf8') as outfile:
-                json.dump(data, outfile, ensure_ascii=False, indent=2)
+            if new_data not in data["buttons"]:
+                data["buttons"].insert(0, new_data)
+                with open('keyboard_courses.json', 'w', encoding='utf8') as outfile:
+                    json.dump(data, outfile, ensure_ascii=False, indent=2)
 
-update_keyboard()
+
 def sender(id, text, keyboard):
     vk_session.method('messages.send', {'user_id': id, 'message': text, 'keyboard': keyboard, 'random_id': 0})
 
@@ -50,4 +52,5 @@ for event in longpoll.listen():
             if msg == 'в главное меню':
                 sender(id, 'test2', get_keyboard('keyboard_main.json'))
             if msg == 'направления подготовки и специальности':
+                update_keyboard()
                 sender(id, 'info', get_keyboard('keyboard_courses.json'))
