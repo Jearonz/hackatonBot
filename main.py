@@ -33,21 +33,12 @@ def sendNewRequest(msg):
     for adminId in adminsArray:
         sender(adminId, msg)
 
-def update_keyboard():
-    f = open('admissions_information/AIT.txt', 'r')
-    while True:
-        s = f.readline()
-        if not s:
-            break
-        a = s.split(',')
-        new_data = [{"action": {"type": "text", "payload": "{\"button\": \"1\"}", "label": a[1]}, "color": "secondary"}]
-        with open('keyboards/keyboard_courses.json', encoding='utf8') as f1:
-            data = json.load(f1)
-            if new_data not in data["buttons"]:
-                data["buttons"].insert(0, new_data)
-                with open('keyboards/keyboard_courses.json', 'w', encoding='utf8') as outfile:
-                    json.dump(data, outfile, ensure_ascii=False, indent=2)
-
+def getURI(userId):
+    list = vk_session.method('groups.getMembers', {'group_id': 217764821, 'fields': 'domain'})
+    for item in list['items']:
+        if (str(userId) == str(item['id'])):
+            return item['domain']
+    return False
 
 def sender(id, text, keyboard):
     vk_session.method('messages.send', {'user_id': id, 'message': text, 'keyboard': keyboard, 'random_id': 0})
@@ -107,6 +98,19 @@ def get_faculty_contacts(faculty):
         s += line
     f.close()
     return s
+
+def get_list_of_specs(spec):
+    f = open('admissions_information/spec.txt', 'r')
+    s = ''
+    while True:
+        line = f.readline()
+        a = line.split(';')
+        if a[0] == spec:
+            s += line + '\n'
+        if not line:
+            break
+    return s
+
 # f = open('keyboard.json', 'r')
 # test = f.read()
 
@@ -146,6 +150,7 @@ def sendNewRequest(msg):
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW:
         if event.to_me:
+
             if POST == True and event.text.lower() != 'отмена':
                 textOfPost = event.text
                 ID_POST = creatPost(OWNER_ID, textOfPost)
@@ -158,7 +163,10 @@ for event in longpoll.listen():
                 POST = False
 
             if NEW_REQUEST == True and event.text.lower() != 'отмена':
-                sendNewRequest('Пользователь оставил заявку: "' + event.text + '" \nCсылка на пользователя: https://vk.com/' + str(event.user_id))
+                getLink = getURI(event.user_id)
+                trueLink = '"  \nCсылка на пользователя: https://vk.com/' + str(getLink)
+                link = trueLink if getURI(event.user_id) else '\n ссылку не удалось найти, проверьте сообщения сообщества'
+                sendNewRequest('Пользователь оставил заявку: "' + event.text + link)
                 NEW_REQUEST = False
             elif NEW_REQUEST == True:
                 sender(event.user_id, 'Заявка отменена', get_keyboard('keyboards/keyboard_main.json'))
@@ -166,8 +174,22 @@ for event in longpoll.listen():
 
             msg = event.text.lower()
             id = event.user_id
+            if msg == 'автоматизация и ит':
+                sender(id, get_list_of_specs('Автоматизация и интеллектуальные технологии '), get_keyboard('keyboards/keyboard_branch.json'))
             if msg == 'админ':
                 sender(id, 'Главное меню админа', get_keyboard('keyboards/keyboard_admin.json'))
+            if msg == 'промышленное и гражданское строительство':
+                sender(id, get_list_of_specs('Промышленное и гражданское строительство '), get_keyboard('keyboards/keyboard_branch.json'))
+            if msg == 'транспортное строительство':
+                sender(id, get_list_of_specs('Транспортное строительство '), get_keyboard('keyboards/keyboard_branch.json'))
+            if msg == 'транспортные и энергетические системы':
+                sender(id, get_list_of_specs('Транспортные и энергетические системы '), get_keyboard('keyboards/keyboard_branch.json'))
+            if msg == 'управление перевозками и логистика':
+                sender(id, get_list_of_specs('Управление перевозками и логистика '), get_keyboard('keyboards/keyboard_branch.json'))
+            if msg == 'факультет безотрывных форм обучения':
+                sender(id, get_list_of_specs('Факультет безотрывных форм обучения '), get_keyboard('keyboards/keyboard_branch.json'))
+            if msg == 'экономика и менеджмент':
+                sender(id, get_list_of_specs('Экономика и менеджмент '), get_keyboard('keyboards/keyboard_branch.json'))
             if msg == 'начать':
                 sender(id, 'Главное меню:', get_keyboard('keyboards/keyboard_main.json'))
             if msg == 'информация о приемной комиссии':
@@ -175,7 +197,6 @@ for event in longpoll.listen():
             if msg == 'в главное меню':
                 sender(id, 'Главное меню: ', get_keyboard('keyboards/keyboard_main.json'))
             if msg == 'направления подготовки и специальности':
-                update_keyboard()
                 sender(id, 'Выберите направление:', get_keyboard('keyboards/keyboard_branch.json'))
             if msg == 'прочее':
                 sender(id, 'Выберите нужную вам информацию: ', get_keyboard('keyboards/keyboard_info.json'))

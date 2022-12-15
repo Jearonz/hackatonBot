@@ -6,7 +6,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Транспорт"
+               "label":"Автоматизация и ИТ"
             },
             "color":"secondary"
          }
@@ -16,7 +16,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Строительство"
+               "label":"Промышленное и гражданское строительство"
             },
             "color":"secondary"
          }
@@ -26,7 +26,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Промышленность"
+               "label":"Транспортное строительство"
             },
             "color":"secondary"
          }
@@ -36,7 +36,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Логистика"
+               "label":"Транспортные и энергетические системы"
             },
             "color":"secondary"
          }
@@ -46,7 +46,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Информационные технологии"
+               "label":"Управление перевозками и логистика"
             },
             "color":"secondary"
          }
@@ -56,7 +56,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Экономика и менеджемент"
+               "label":"Факультет безотрывных форм обучения"
             },
             "color":"secondary"
          }
@@ -66,7 +66,7 @@
             "action":{
                "type":"text",
                "payload":"{\"button\": \"1\"}",
-               "label":"Психология"
+               "label":"Экономика и менеджмент"
             },
             "color":"secondary"
          }
