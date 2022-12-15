@@ -1,0 +1,45 @@
+{
+  "one_time": false,
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"1\"}",
+          "label": "Об университете"
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"1\"}",
+          "label": "Вопросы и ответы"
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"1\"}",
+          "label": "Контакты"
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"2\"}",
+          "label": "В главное меню"
+        },
+        "color": "secondary"
+      }
+    ]
+  ]
+}

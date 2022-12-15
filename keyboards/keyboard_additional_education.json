@@ -1,0 +1,45 @@
+{
+   "one_time":false,
+   "buttons":[
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Центр транспортной безопасности"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"Центр развития ЖД перевозок"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"Институт прикладной экономики"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"В главное меню"
+            },
+            "color":"secondary"
+         }
+      ]
+   ]
+}

@@ -1,0 +1,35 @@
+{
+  "one_time": false,
+  "buttons": [
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"1\"}",
+          "label": "Контактная информация"
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"1\"}",
+          "label": "Контакты факультетов"
+        },
+        "color": "secondary"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "payload": "{\"button\": \"2\"}",
+          "label": "В главное меню"
+        },
+        "color": "secondary"
+      }
+    ]
+  ]
+}
