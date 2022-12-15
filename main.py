@@ -13,6 +13,7 @@ OWNER_ID = -217764821
 POST = False
 ID_POST = None
 NEW_REQUEST = False
+REPOST = False
 ADMINS_ACTIVE = []
 # Press the green button in the gutter to run the script.
 
@@ -22,6 +23,11 @@ sessionApi = vk_session.get_api()
 sessionApiAdmin = vk_session_admin.get_api()
 longpoll = VkLongPoll(vk_session)
 longpollAdmin = VkLongPoll(vk_session_admin)
+
+
+def sendOldPost(idPost):
+    for userId in usersArray:
+        sendPost(int(userId), 'wall' + str(OWNER_ID) + '_' + str(idPost))
 
 def get_keyboard(file):
     f = open(file, 'r')
@@ -123,9 +129,7 @@ except IOError as e:
 finally:
     f = open('users.txt', 'r')
     users = f.read()
-    print(users)
     usersArray = users.split(',')
-    print(usersArray)
     f.close()
 
     f = open('admins.txt', 'r')
@@ -154,7 +158,6 @@ for event in longpoll.listen():
             if POST == True and event.text.lower() != 'отмена':
                 textOfPost = event.text
                 ID_POST = creatPost(OWNER_ID, textOfPost)
-                print(ID_POST)
                 POST = False
                 sender(event.user_id, 'Я сделал пост', get_keyboard('keyboards/keyboard_admin.json'))
                 sendNewPost()
@@ -171,6 +174,14 @@ for event in longpoll.listen():
             elif NEW_REQUEST == True:
                 sender(event.user_id, 'Заявка отменена', get_keyboard('keyboards/keyboard_main.json'))
                 NEW_REQUEST = False
+
+            if REPOST and event.text.lower() != 'отмена':
+                postId = event.text.split('_')[-1]
+                sendOldPost(postId)
+                REPOST = False
+            elif REPOST:
+                sender(event.user_id, 'Рассылка отменена', get_keyboard('keyboards/keyboard_admin.json'))
+                REPOST = False
 
             msg = event.text.lower()
             id = event.user_id
@@ -254,11 +265,12 @@ for event in longpoll.listen():
                     sender(id, 'Введите текст поста, для отмены введите "отмена"', get_keyboard('keyboards/keyboard_admin_post.json'))
                     POST = True
                 elif str(id) in adminsArray:
-                    sender(id, 'Вы не вошли в панель администратора', get_keyboard('keyboards/keyboard_admin.json'))
+                    sender(id, 'Вы не вошли в панель администратора', get_keyboard('keyboards/keyboard_main.json'))
                 else:
                     sender(id, 'Вы не админ', get_keyboard('keyboards/keyboard_main.json'))
+
             if msg == 'даты приемной комиссии':
-                sender(id, 'testdate', get_keyboard('keyboards/keyboard_second.json'))
+                sender(id, read_file('txt_files/dates.txt'), get_keyboard('keyboards/keyboard_second.json'))
 
             if msg == 'оставить заявку':
                 sender(id, 'Введите текст заявки, для отмены введите "отмена"',get_keyboard('keyboards/keyboard_main.json'))
@@ -272,4 +284,13 @@ for event in longpoll.listen():
                 sender(id, 'Вы вышли из панели администратора', get_keyboard('keyboards/keyboard_main.json'))
                 ADMINS_ACTIVE.remove(str(id))
 
+
+            if msg == 'рассылка':
+                if str(id) in ADMINS_ACTIVE:
+                    sender(id, 'Введите ссылку на пост,  для отмены введите "отмена"', get_keyboard('keyboards/keyboard_admin.json'))
+                    REPOST = True
+                elif str(id) in adminsArray:
+                    sender(id, 'Вы не вошли в панель администратора', get_keyboard('keyboards/keyboard_main.json'))
+                else:
+                    sender(id, 'Вы не админ', get_keyboard('keyboards/keyboard_main.json'))
 
