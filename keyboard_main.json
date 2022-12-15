@@ -1,0 +1,55 @@
+{
+   "one_time":false,
+   "buttons":[
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Информация о приемной комиссии"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action": {
+               "type": "text",
+               "payload": "{\"button\": \"2\"}",
+               "label": "Платные образовательные услуги"
+            },
+            "color": "secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"Информация о дополнительном образовании"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"3\"}",
+               "label":"Прочее"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"3\"}",
+               "label":"Оставить заявку"
+            },
+            "color":"secondary"
+         }
+      ]
+   ]
+}

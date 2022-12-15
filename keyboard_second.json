@@ -1,0 +1,35 @@
+{
+   "one_time":false,
+   "buttons":[
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Направления подготовки и специальности"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"Даты приемной комиссии"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"В главное меню"
+            },
+            "color":"secondary"
+         }
+      ]
+   ]
+}

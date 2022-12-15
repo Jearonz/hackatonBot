@@ -8,11 +8,16 @@ vk_session = vk_api.VkApi(token=MAIN_TOKEN)
 sessionApi = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
 
-f = open('keyboard.json', 'r')
-test = f.read()
 
-def sender(id, text):
-    vk_session.method('messages.send', {'user_id': id, 'message': text, 'keyboard': test, 'random_id': 0})
+def get_keyboard(file):
+    f = open(file, 'r')
+    keyboard = f.read()
+    f.close()
+    return keyboard
+
+
+def sender(id, text, keyboard):
+    vk_session.method('messages.send', {'user_id': id, 'message': text, 'keyboard': keyboard, 'random_id': 0})
 
 
 for event in longpoll.listen():
@@ -21,4 +26,10 @@ for event in longpoll.listen():
             msg = event.text.lower()
             id = event.user_id
             if msg == 'привет':
-                sender(id, 'и тебе привет')
+                sender(id, 'и тебе привет', get_keyboard('keyboard_main.json'))
+            if msg == 'информация о приемной комиссии':
+                sender(id, 'test', get_keyboard('keyboard_second.json'))
+            if msg == '':
+                sender(id, 'test', get_keyboard('keyboard_third.json'))
+            if msg == 'в главное меню':
+                sender(id, 'test2', get_keyboard('keyboard_main.json'))

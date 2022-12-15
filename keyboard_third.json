@@ -8,16 +8,20 @@
                "payload":"{\"button\": \"1\"}",
                "label":"Информация о приемной комиссии"
             },
-            "color":"positive"
-         },
+            "color":"secondary"
+         }
+      ],
+      [
          {
             "action":{
                "type":"text",
                "payload":"{\"button\": \"2\"}",
                "label":"Информация о дополнительном образовании"
             },
-            "color":"primary"
-         },
+            "color":"secondary"
+         }
+      ],
+      [
          {
             "action":{
                "type":"text",
@@ -25,7 +29,9 @@
                "label":"Прочее"
             },
             "color":"secondary"
-         },
+         }
+      ],
+      [
          {
             "action":{
                "type":"text",
