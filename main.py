@@ -117,8 +117,6 @@ def get_list_of_specs(spec):
             break
     return s
 
-# f = open('keyboard.json', 'r')
-# test = f.read()
 
 try:
     f = open('users.txt', 'r')
