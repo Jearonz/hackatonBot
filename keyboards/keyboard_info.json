@@ -38,7 +38,7 @@
           "payload": "{\"button\": \"2\"}",
           "label": "В главное меню"
         },
-        "color": "secondary"
+        "color": "negative"
       }
     ]
   ]

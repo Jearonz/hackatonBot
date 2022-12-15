@@ -48,7 +48,7 @@
                "payload":"{\"button\": \"3\"}",
                "label":"Оставить заявку"
             },
-            "color":"secondary"
+            "color":"negative"
          }
       ]
    ]
