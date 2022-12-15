@@ -1,0 +1,25 @@
+{
+   "one_time":false,
+   "buttons":[
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Отмена"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"В главное меню"
+            },
+            "color":"secondary"
+         }
+      ]
+   ]
+}
