@@ -41,8 +41,8 @@ finally:
 
     f = open('admins.txt', 'r')
     admins = f.read()
-    adminsArray = users.split(',')
-
+    adminsArray = admins.split(',')
+    f.close()
 
 def sender(id, text):
     vk_session.method('messages.send', {'user_id': id, 'message': text, 'random_id': 0})
@@ -90,11 +90,10 @@ for event in longpoll.listen():
                 print(usersArray)
             if msg == 'привет':
                 sender(id, 'и тебе привет')
-            # if msg == 'рассылка':
-            #     for id in usersArray
-            if msg == 'рассылка':
-                for userId in usersArray:
-                    sendPost(int(userId),'wall-217764821_35')
             if msg == 'пост':
-                sender(id, 'Введите текст поста или "отмена" для отмены')
-                POST = True
+                print(adminsArray)
+                if str(id) in adminsArray:
+                    sender(id, 'Введите текст поста или "отмена" для отмены')
+                    POST = True
+                else:
+                    sender(id, 'Вы не админ')
