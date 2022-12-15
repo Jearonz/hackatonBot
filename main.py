@@ -8,8 +8,10 @@ OWNER_TOKEN = 'vk1.a.XVjgiLNTQtrLs00Raha2V1vWIT4GTGA5nt-EHME3aejya4rpDyL8iA3zYH-
 textOfPost = ''
 OWNER_ID = -217764821
 POST = False
-SEND_NEW_POST = False
 ID_POST = None
+NEW_REQUEST = False
+ADMINS_ACTIVE = []
+# ID_OF_USER_REQUEST = 0
 
 # Press the green button in the gutter to run the script.
 
@@ -57,6 +59,12 @@ def sendNewPost():
     for userId in usersArray:
         sendPost(int(userId), 'wall' + str(OWNER_ID) +'_' + str(ID_POST['post_id']))
 
+def sendNewRequest(msg):
+    for adminId in adminsArray:
+        sender(adminId, msg)
+
+#def getURI(chat_id):
+
 
 for event in longpoll.listen():
     # print(event.attachments)
@@ -73,6 +81,12 @@ for event in longpoll.listen():
             elif POST == True:
                 sender(event.user_id, 'Отмена постинга')
                 POST = False
+
+            if NEW_REQUEST == True and event.text.lower() != 'отмена':
+                sendNewRequest('Пользователь оставил заявку: "' + event.text + '"  \nCсылка на пользователя: https://vk.com/' + str(event.user_id))
+                NEW_REQUEST = False
+
+
             msg = event.text.lower()
             id = event.user_id
             idString = str(id)
@@ -92,8 +106,23 @@ for event in longpoll.listen():
                 sender(id, 'и тебе привет')
             if msg == 'пост':
                 print(adminsArray)
-                if str(id) in adminsArray:
-                    sender(id, 'Введите текст поста или "отмена" для отмены')
+                if str(id) in ADMINS_ACTIVE:
+                    sender(id, 'Введите текст поста, для отмены введите "отмена"')
                     POST = True
+                elif str(id) in adminsArray:
+                    sender(id, 'Вы не вошли в панель администратора')
                 else:
                     sender(id, 'Вы не админ')
+
+            if msg == 'оставить заявку':
+                sender(id, 'Введите текст заявки, для отмены введите "отмена"')
+                NEW_REQUEST = True
+
+
+            if msg == 'админ' and str(id) in adminsArray:
+                sender(id, 'Вы вошли в панель админа')
+                ADMINS_ACTIVE.append(str(id))
+
+            if msg == 'выход' and str(id) in ADMINS_ACTIVE:
+                sender(id, 'Вы вышли из панели администратора')
+                ADMINS_ACTIVE.remove(str(id))
