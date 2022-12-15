@@ -1,0 +1,85 @@
+{
+   "one_time":false,
+   "buttons":[
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Транспорт"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Строительство"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Промышленность"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Логистика"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Информационные технологии"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Экономика и менеджемент"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"1\"}",
+               "label":"Психология"
+            },
+            "color":"secondary"
+         }
+      ],
+      [
+         {
+            "action":{
+               "type":"text",
+               "payload":"{\"button\": \"2\"}",
+               "label":"В главное меню"
+            },
+            "color":"secondary"
+         }
+      ]
+   ]
+}

@@ -158,7 +158,10 @@ for event in longpoll.listen():
                 POST = False
 
             if NEW_REQUEST == True and event.text.lower() != 'отмена':
-                sendNewRequest('Пользователь оставил заявку: "' + event.text + '"  \nCсылка на пользователя: https://vk.com/' + str(event.user_id))
+                sendNewRequest('Пользователь оставил заявку: "' + event.text + '" \nCсылка на пользователя: https://vk.com/' + str(event.user_id))
+                NEW_REQUEST = False
+            elif NEW_REQUEST == True:
+                sender(event.user_id, 'Заявка отменена', get_keyboard('keyboards/keyboard_main.json'))
                 NEW_REQUEST = False
 
             msg = event.text.lower()
@@ -173,7 +176,7 @@ for event in longpoll.listen():
                 sender(id, 'Главное меню: ', get_keyboard('keyboards/keyboard_main.json'))
             if msg == 'направления подготовки и специальности':
                 update_keyboard()
-                sender(id, 'Выберите направление:', get_keyboard('keyboards/keyboard_courses.json'))
+                sender(id, 'Выберите направление:', get_keyboard('keyboards/keyboard_branch.json'))
             if msg == 'прочее':
                 sender(id, 'Выберите нужную вам информацию: ', get_keyboard('keyboards/keyboard_info.json'))
             if msg == 'вопросы и ответы':
@@ -225,7 +228,7 @@ for event in longpoll.listen():
                         f.write(',')
                 f.close()
 
-            if msg == 'Сделать пост':
+            if msg == 'сделать пост':
                 if str(id) in ADMINS_ACTIVE:
                     sender(id, 'Введите текст поста, для отмены введите "отмена"', get_keyboard('keyboards/keyboard_admin_post.json'))
                     POST = True
@@ -233,6 +236,8 @@ for event in longpoll.listen():
                     sender(id, 'Вы не вошли в панель администратора', get_keyboard('keyboards/keyboard_admin.json'))
                 else:
                     sender(id, 'Вы не админ', get_keyboard('keyboards/keyboard_main.json'))
+            if msg == 'даты приемной комиссии':
+                sender(id, 'testdate', get_keyboard('keyboards/keyboard_second.json'))
 
             if msg == 'оставить заявку':
                 sender(id, 'Введите текст заявки, для отмены введите "отмена"',get_keyboard('keyboards/keyboard_main.json'))
